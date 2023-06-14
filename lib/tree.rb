@@ -31,7 +31,7 @@ class Tree
     return if value == @root.data || value.nil?
 
     tmp = @root
-    tmp = value < tmp.data ? tmp.left : tmp.right until tmp.nil?
+    tmp = value < tmp.data ? tmp.left : tmp.right until tmp.left.nil? || tmp.right.nil?
 
     value < tmp.data ? tmp.left = Node.new(value) : tmp.right = Node.new(value)
   end
