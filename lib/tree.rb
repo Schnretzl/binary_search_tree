@@ -114,4 +114,19 @@ class Tree
     return_arr
   end
 
+  def inorder(node = @root, &block)
+    return [] if node.nil?
+    return_arr = []
+
+    return_arr += inorder(node.left, &block) if node.left
+    return_arr << node if block_given?
+    return_arr += inorder(node.right, &block) if node.right
+
+    if block_given?
+      return_arr.each { |item| yield item }
+    else
+      return_arr
+    end
+  end
+
 end
