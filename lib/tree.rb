@@ -40,7 +40,7 @@ class Tree
     return if value.nil?
 
     parent = find_parent(value)
-    delete_node = find_node(value)
+    delete_node = find(value)
     if parent == delete_node
       delete_parent
     elsif delete_node.left.nil? && delete_node.right.nil?
@@ -70,7 +70,7 @@ class Tree
     temp_parent.right = nil
   end
 
-  def find_node(value)
+  def find(value)
     node = @root
     while node && node.data != value
       node = value < node.data ? node.left : node.right
@@ -100,6 +100,18 @@ class Tree
   def find_max(node)
     node = node.right until node.right.nil?
     node
+  end
+
+  def level_order
+    node_arr = [@root]
+    return_arr = []
+    while node_arr.any?
+      node_arr << node_arr[0].left unless node_arr[0].left.nil?
+      node_arr << node_arr[0].right unless node_arr[0].right.nil?
+      yield node_arr.shift if block_given?
+      return_arr << node_arr.shift.data if !block_given?
+    end
+    return_arr
   end
 
 end
