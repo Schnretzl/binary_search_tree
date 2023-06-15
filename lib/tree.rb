@@ -35,4 +35,71 @@ class Tree
 
     value < tmp.data ? tmp.left = Node.new(value) : tmp.right = Node.new(value)
   end
+
+  def delete(value)
+    return if value.nil?
+
+    parent = find_parent(value)
+    delete_node = find_node(value)
+    if parent == delete_node
+      delete_parent
+    elsif delete_node.left.nil? && delete_node.right.nil?
+      delete_node.data < parent.data ? parent.left = nil : parent.right = nil
+    elsif (delete_node.left.nil? && !delete_node.right.nil?) || (!delete_node.left.nil? && delete_node.right.nil?)
+      if delete_node.data > parent.data
+        parent.right = delete_node.left.nil? ? delete_node.right : delete_node.left
+      else
+        parent.left = delete_node.left.nil? ? delete_node.right : delete_node.left
+      end
+    else
+      temp = find_max(delete_node.left)
+      temp_parent = find_parent(temp.data)
+      temp.data > parent.data ? parent.right = temp : parent.left = temp
+      temp.left = delete_node.left
+      temp.right = delete_node.right
+      temp_parent.right = nil
+    end
+  end
+
+  def delete_parent
+    temp = find_max(@root.left)
+    temp_parent = find_parent(temp.data)
+    temp.left = @root.left
+    temp.right = @root.right
+    @root = temp
+    temp_parent.right = nil
+  end
+
+  def find_node(value)
+    node = @root
+    while node && node.data != value
+      node = value < node.data ? node.left : node.right
+      puts 'Value not found!' if node.nil?
+    end
+    node
+  end
+
+  def find_parent(value)
+    node = @root
+    return node if node.data == value
+    parent = nil
+
+    until node.nil?
+      if (node.left && node.left.data == value) || (node.right && node.right.data == value)
+        parent = node
+        break
+      end
+
+      node = value < node.data ? node.left : node.right
+    end
+
+    puts 'Value not found!' if parent.nil?
+    parent
+  end
+
+  def find_max(node)
+    node = node.right until node.right.nil?
+    node
+  end
+
 end
