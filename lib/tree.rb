@@ -199,8 +199,8 @@ class Tree
   def rebalance
     return self if balanced?
 
-    balanced_tree_arr = self.inorder
-    build_tree(balanced_tree_arr)
+    balanced_tree_arr = inorder
+    Tree.new(balanced_tree_arr)
   end
 
 end
