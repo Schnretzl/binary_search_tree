@@ -183,9 +183,9 @@ class Tree
   end
 
   def balanced?(node = @root)
-    return true if node.left.nil? && node.right.nil?
-    return true if node.left.nil? && height(node.right) == 0
-    return true if node.right.nil? && height(node.left) == 0
+    return true if node.nil? || (node.left.nil? && node.right.nil?)
+    return false if node.left.nil? && height(node.right) != 0
+    return false if node.right.nil? && height(node.left) != 0
 
     balanced?(node.left) && balanced?(node.right)
   end
