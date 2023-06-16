@@ -159,4 +159,15 @@ class Tree
     end
   end
 
+  def height(node)
+    return 0 if node.left.nil? && node.right.nil?
+    return height(node.right) + 1 if node.left.nil?
+    return height(node.left) + 1 if node.right.nil?
+
+    height_left = height(node.left) if node.left
+    height_right = height(node.right) if node.right
+
+    height_left > height_right ? height_left + 1 : height_right + 1
+  end
+
 end
