@@ -144,4 +144,19 @@ class Tree
     end
   end
 
+  def postorder(node = @root, &block)
+    return [] if node.nil?
+
+    return_arr = []
+    return_arr += postorder(node.left, &block) if node.left
+    return_arr += postorder(node.right, &block) if node.right
+    return_arr << node if block_given?
+
+    if node == @root
+      return_arr.each { |item| yield item }
+    else
+      return_arr
+    end
+  end
+
 end
