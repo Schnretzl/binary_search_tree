@@ -120,10 +120,12 @@ class Tree
     return_arr = []
     return_arr += inorder(node.left, &block) if node.left
     return_arr << node if block_given?
+    return_arr << node.data unless block_given?
     return_arr += inorder(node.right, &block) if node.right
 
     if node == @root
-      return_arr.each { |item| yield item }
+      return return_arr.each { |item| yield item } if block_given?
+      return return_arr
     else
       return_arr
     end
@@ -134,11 +136,13 @@ class Tree
 
     return_arr = []
     return_arr << node if block_given?
+    return_arr << node.data unless block_given?
     return_arr += preorder(node.left, &block) if node.left
     return_arr += preorder(node.right, &block) if node.right
 
     if node == @root
-      return_arr.each { |item| yield item }
+      return_arr.each { |item| yield item } if block_given?
+      return return_arr
     else
       return_arr
     end
@@ -151,9 +155,11 @@ class Tree
     return_arr += postorder(node.left, &block) if node.left
     return_arr += postorder(node.right, &block) if node.right
     return_arr << node if block_given?
+    return_arr << node.data unless block_given?
 
     if node == @root
-      return_arr.each { |item| yield item }
+      return_arr.each { |item| yield item } if block_given?
+      return return_arr
     else
       return_arr
     end
@@ -188,6 +194,13 @@ class Tree
     return false if node.right.nil? && height(node.left) != 0
 
     balanced?(node.left) && balanced?(node.right)
+  end
+
+  def rebalance
+    return self if balanced?
+
+    balanced_tree_arr = self.inorder
+    build_tree(balanced_tree_arr)
   end
 
 end
