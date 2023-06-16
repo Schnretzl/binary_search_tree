@@ -116,13 +116,28 @@ class Tree
 
   def inorder(node = @root, &block)
     return [] if node.nil?
-    return_arr = []
 
+    return_arr = []
     return_arr += inorder(node.left, &block) if node.left
     return_arr << node if block_given?
     return_arr += inorder(node.right, &block) if node.right
 
-    if block_given?
+    if node == @root
+      return_arr.each { |item| yield item }
+    else
+      return_arr
+    end
+  end
+
+  def preorder(node = @root, &block)
+    return [] if node.nil?
+
+    return_arr = []
+    return_arr << node if block_given?
+    return_arr += preorder(node.left, &block) if node.left
+    return_arr += preorder(node.right, &block) if node.right
+
+    if node == @root
       return_arr.each { |item| yield item }
     else
       return_arr
