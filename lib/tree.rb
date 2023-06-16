@@ -160,7 +160,7 @@ class Tree
   end
 
   def height(node)
-    return 0 if node.left.nil? && node.right.nil?
+    return 0 if (node.left.nil? && node.right.nil?) || node.nil?
     return height(node.right) + 1 if node.left.nil?
     return height(node.left) + 1 if node.right.nil?
 
@@ -168,6 +168,18 @@ class Tree
     height_right = height(node.right) if node.right
 
     height_left > height_right ? height_left + 1 : height_right + 1
+  end
+
+  def depth(node)
+    return 0 if node == @root || node.nil?
+
+    traverse_node = @root
+    depth = 0
+    while traverse_node && traverse_node.data != node.data
+      traverse_node = node.data < traverse_node.data ? traverse_node.left : traverse_node.right
+      depth += 1
+    end
+    depth
   end
 
 end
