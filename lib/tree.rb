@@ -31,7 +31,9 @@ class Tree
     return if value == @root.data || value.nil?
 
     tmp = @root
-    tmp = value < tmp.data ? tmp.left : tmp.right until tmp.left.nil? || tmp.right.nil?
+    until tmp.left.nil? || tmp.right.nil?
+      tmp = value < tmp.data ? tmp.left : tmp.right
+    end
 
     value < tmp.data ? tmp.left = Node.new(value) : tmp.right = Node.new(value)
   end
@@ -109,9 +111,9 @@ class Tree
       node_arr << node_arr[0].left unless node_arr[0].left.nil?
       node_arr << node_arr[0].right unless node_arr[0].right.nil?
       yield node_arr.shift if block_given?
-      return_arr << node_arr.shift.data if !block_given?
+      return_arr << node_arr.shift.data unless block_given?
     end
-    return_arr
+    return return_arr unless block_given?
   end
 
   def inorder(node = @root, &block)
@@ -124,8 +126,8 @@ class Tree
     return_arr += inorder(node.right, &block) if node.right
 
     if node == @root
-      return return_arr.each { |item| yield item } if block_given?
-      return return_arr
+      return_arr.each { |item| yield item } if block_given?
+      return return_arr unless block_given?
     else
       return_arr
     end
@@ -142,7 +144,7 @@ class Tree
 
     if node == @root
       return_arr.each { |item| yield item } if block_given?
-      return return_arr
+      return return_arr unless block_given?
     else
       return_arr
     end
@@ -159,7 +161,7 @@ class Tree
 
     if node == @root
       return_arr.each { |item| yield item } if block_given?
-      return return_arr
+      return return_arr unless block_given?
     else
       return_arr
     end
