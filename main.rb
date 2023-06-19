@@ -1,31 +1,32 @@
 require_relative 'lib/tree'
 
-# my_array = []
-# while my_array.length < 20
-#   random_number = rand(100)
-#   my_array << random_number unless my_array.include?(random_number)
-# end
-# my_tree = Tree.new(my_array)
-# my_tree.pretty_print
-
-# array_2 = [1, 2, 3]
-# tree_2 = Tree.new(array_2)
-# tree_2.insert(8)
-# tree_2.pretty_print
-
-array_3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-tree_3 = Tree.new(array_3)
-# tree_3.pretty_print
-# tree_3.delete(1)
-# tree_3.pretty_print
-# tree_3.delete(9)
-# tree_3.pretty_print
-# tree_3.delete(5)
-tree_3.pretty_print
-
-
-# tree_3.level_order { |node| puts node.data }
-# tree_3.inorder { |node| puts node.data }
-# tree_3.preorder { |node| puts node.data }
-# tree_3.postorder { |node| node.data }
-p tree_3.height(tree_3.root.right)
+test_arr = (Array.new(15) { rand(1..100) })
+test_tree = Tree.new(test_arr)
+test_tree.pretty_print
+puts "\nTree is balanced:  #{test_tree.balanced?}\n"
+puts 'Level order traversal:'
+puts "#{test_tree.level_order { |node| puts node.data }}"
+puts 'Inorder traversal:'
+puts "#{test_tree.inorder { |node| puts node.data }}"
+puts 'Preorder traversal:'
+puts "#{test_tree.preorder { |node| puts node.data }}"
+puts 'Postorder traversal:'
+puts "#{test_tree.postorder { |node| puts node.data }}"
+test_tree.insert(110)
+test_tree.insert(500)
+test_tree.insert(220)
+test_tree.insert(300)
+test_tree.insert(480)
+test_tree.pretty_print
+puts "\nTree is balanced: #{test_tree.balanced?}\n"
+test_tree = test_tree.rebalance
+test_tree.pretty_print
+puts "\nTree is balanced: #{test_tree.balanced?}\n"
+puts 'Level order traversal:'
+puts "#{test_tree.level_order { |node| puts node.data }}"
+puts 'Inorder traversal:'
+puts "#{test_tree.inorder { |node| puts node.data }}"
+puts 'Preorder traversal:'
+puts "#{test_tree.preorder { |node| puts node.data }}"
+puts 'Postorder traversal:'
+puts "#{test_tree.postorder { |node| puts node.data }}"
